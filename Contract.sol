@@ -36,6 +36,7 @@ contract ZombieFactory {
 
     //Creates a Zombie struct with random DNA
     function createRandomZombie(string memory _name) public {
+       require(ownerZombieCount[msg.sender] == 0);    //required to be true for the rest to execute
         uint randDna = _generateRandomDna(_name);
         _createZombie(_name, randDna);
     }
