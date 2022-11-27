@@ -42,8 +42,3 @@ contract ZombieFactory {
     }
 
 }
-
-//Second solidity contract that inherets properties from ZomebieFactory
-contract ZombieFeeding is ZombieFactory {
-
-}
