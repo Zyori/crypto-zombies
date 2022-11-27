@@ -5,4 +5,10 @@ import "./zombiefactory.sol";
 
 contract ZombieFeeding is ZombieFactory {
 
+    //Allows Zombies to multipy and be affected by what they feed on
+    function feedAndMultiply(uint _zombieId, uint _targetDna) public {
+        require(msg.sender == zombieToOwner[_zombieId]);      //msg.sender must come first in require statements
+        Zombie storage myZombie = zombies[_zombieId];       //storage is on blockchain, memory is local to function
+    }
+
 }
