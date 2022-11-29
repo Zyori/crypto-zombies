@@ -3,6 +3,22 @@ pragma solidity >=0.5.0 <0.6.0;
 //Importts other contract for inheritence
 import "./zombiefactory.sol";
 
+//Interface to interact with CryptoKitties smart contract
+contract KittyInterface {
+    function getKitty(uint256 _id) external view returns (
+    bool isGestating,
+    bool isReady,
+    uint256 cooldownIndex,
+    uint256 nextActionAt,
+    uint256 siringWithId,
+    uint256 birthTime,
+    uint256 matronId,
+    uint256 sireId,
+    uint256 generation,
+    uint256 genes
+); //looks like function declaration but ends with ; to signify interface
+}
+
 contract ZombieFeeding is ZombieFactory {
 
     //Allows Zombies to multipy and be affected by what they feed on
