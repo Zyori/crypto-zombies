@@ -21,6 +21,10 @@ contract KittyInterface {
 
 contract ZombieFeeding is ZombieFactory {
 
+    //Sets KittyContract to point to the outside ck contract
+    address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
+    KittyInterface kittyContract = KittyInterface(ckAddress);     //declares kittyContract as new variable
+
     //Allows Zombies to multipy and be affected by what they feed on
     function feedAndMultiply(uint _zombieId, uint _targetDna) public {
         require(msg.sender == zombieToOwner[_zombieId]);      //msg.sender must come first in require statements
