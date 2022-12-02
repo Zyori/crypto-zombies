@@ -16,7 +16,7 @@ contract KittyInterface {
     uint256 sireId,
     uint256 generation,
     uint256 genes
-); //looks like function declaration but ends with ; to signify interface
+); //looks like function declaration but ends with ; to signify interface from another contract instead of function
 }
 
 contract ZombieFeeding is ZombieFactory {
@@ -32,6 +32,13 @@ contract ZombieFeeding is ZombieFactory {
         _targetDna  = _targetDna % dnaModulus;
         uint newDna = (myZombie.dna + _targetDna) / 2;
         _createZombie("NoName", newDna);
+    }
+
+    //Allows Zombies to feed on a CryptoKitty's DNA
+    function feedOnKitty(uint _zombieId, uint _kittyId) public {
+        uint kittyDna;
+        (,,,,,,,,,kittyDna) = kittyContract.getKitty(_kittyId); //functions that return multiple variables require this syntax
+        feedAndMultiply(_zombieId, kittyDna);
     }
 
 }
