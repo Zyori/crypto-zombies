@@ -26,19 +26,22 @@ contract ZombieFeeding is ZombieFactory {
     KittyInterface kittyContract = KittyInterface(ckAddress);     //declares kittyContract as new variable
 
     //Allows Zombies to multipy and be affected by what they feed on
-    function feedAndMultiply(uint _zombieId, uint _targetDna) public {
-        require(msg.sender == zombieToOwner[_zombieId]);      //msg.sender must come first in require statements
-        Zombie storage myZombie = zombies[_zombieId];       //storage is on blockchain, memory is local to function
-        _targetDna  = _targetDna % dnaModulus;
-        uint newDna = (myZombie.dna + _targetDna) / 2;
-        _createZombie("NoName", newDna);
-    }
+    function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) public {
+      require(msg.sender == zombieToOwner[_zombieId]);
+      Zombie storage myZombie = zombies[_zombieId];
+      _targetDna = _targetDna % dnaModulus;
+      uint newDna = (myZombie.dna + _targetDna) / 2;
+
+      //checks to make sure its a kitty and replaces last two digits with 99 to denote
+      if (keccak256(abi.encodePacked(_species)) == keccak256(abi.encodePacked("kitty"))) {
+        newDna = newDna - newDna % 100 + 99;
+      }
 
     //Allows Zombies to feed on a CryptoKitty's DNA
     function feedOnKitty(uint _zombieId, uint _kittyId) public {
         uint kittyDna;
         (,,,,,,,,,kittyDna) = kittyContract.getKitty(_kittyId); //functions that return multiple variables require this syntax
-        feedAndMultiply(_zombieId, kittyDna);
+        feedAndMultiply(_zombieId, kittyDna, "kitty");
     }
 
 }
