@@ -25,7 +25,7 @@ contract ZombieFeeding is ZombieFactory {
     KittyInterface kittyContract;
 
     //Allows kittycontract to be dynamic in case its re-deployed
-    function setKittyContractAddress(address _address) external {
+    function setKittyContractAddress(address _address) external onlyOwner { //added onlyOwner for security so no one else can edit
       kittyContract = KittyInterface(_address);
     }
 
