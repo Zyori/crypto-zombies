@@ -21,9 +21,13 @@ contract KittyInterface {
 
 contract ZombieFeeding is ZombieFactory {
 
-    //Sets KittyContract to point to the outside ck contract
-    address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
-    KittyInterface kittyContract = KittyInterface(ckAddress);     //declares kittyContract as new variable
+    //Initiates kittycontract
+    KittyInterface kittyContract;
+
+    //Allows kittycontract to be dynamic in case its re-deployed
+    function setKittyContractAddress(address _address) external {
+      kittyContract = KittyInterface(_address);
+    }
 
     //Allows Zombies to multipy and be affected by what they feed on
     function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) public {
