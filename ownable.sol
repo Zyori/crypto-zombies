@@ -1,6 +1,7 @@
 pragma solidity >=0.5.0 <0.6.0;
 
 //Pasted from the OpenZeppelin Solidity library
+//it sets owner to msg.sender on creation, adds onlyOwner functions, and allows transfer of ownership
 
 /**
 * @title Ownable

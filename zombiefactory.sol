@@ -1,7 +1,10 @@
 pragma solidity  >=0.5.0 <0.6.0;
 
+//Importts ownable contract for inheritence
+import "./ownable.sol";
+
 //Solidity contract to create Zombies with random DNA
-contract ZombieFactory {
+contract ZombieFactory is Ownable {
 
     event NewZombie(uint zombieId, string name, uint dna);
 
