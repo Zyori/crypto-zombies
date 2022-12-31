@@ -10,6 +10,7 @@ contract ZombieFactory is Ownable {
 
     uint dnaDigits = 16;
     uint dnaModulus = 10 ** dnaDigits;
+    uint cooldownTime = 1 days; //always plural, sinleton 'day' won't compile
 
     //Main Zombie "object" - called a "struct" in Solidity
     struct Zombie {
@@ -27,7 +28,7 @@ contract ZombieFactory is Ownable {
 
     //Creates a new Zombie from name and dna
     function _createZombie(string memory _name, uint _dna) internal {
-        uint id = zombies.push(Zombie(_name, _dna)) - 1;   //pushes new Zombie and returns id in one line
+        uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime))) - 1;  //pushes new Zombie and returns id in one line
         zombieToOwner[id] = msg.sender;     //maps address that called the function to the id for ownership
         ownerZombieCount[msg.sender]++;     //maps zombie count + 1 to address that called the function
         emit NewZombie(id, _name, _dna);
