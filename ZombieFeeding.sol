@@ -40,11 +40,14 @@ contract ZombieFeeding is ZombieFactory {
     }
 
     //Allows Zombies to multipy and be affected by what they feed on
-    function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) public {
+    function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal {
       require(msg.sender == zombieToOwner[_zombieId]);
       Zombie storage myZombie = zombies[_zombieId];
+      require(_isReady(myZombie));  //requires Zombie cooldown to be available
       _targetDna = _targetDna % dnaModulus;
       uint newDna = (myZombie.dna + _targetDna) / 2;
+      _createZombie("NoName", newDna);
+      _triggerCooldown(myZombie);
 
       //checks to make sure its a kitty and replaces last two digits with 99 to denote
       if (keccak256(abi.encodePacked(_species)) == keccak256(abi.encodePacked("kitty"))) {
